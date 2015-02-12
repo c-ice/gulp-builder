@@ -37,7 +37,7 @@ module.exports = function (file, options) {
               return options.enableHtmlComment ? a : '';
           })
           .replace(reg, function (a, quote, b) {
-              var filePath = path.normalize(b);
+              var filePath = path.normalize('./'+b);
 
               paths.push(filePath);
           });
@@ -52,8 +52,6 @@ module.exports = function (file, options) {
                 }
             });
         }
-
-
 
         return paths;
     }
