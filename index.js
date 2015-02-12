@@ -112,6 +112,8 @@ module.exports = function (options) {
             });
         });
 
+        log('Promises mapped');
+
         return Q.all(promises).then(function () {
             log(html);
         });
