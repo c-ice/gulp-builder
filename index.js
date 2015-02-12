@@ -100,7 +100,9 @@ module.exports = function (options) {
                     html[i] = transformAction.call(this, block);
                     resolve();
                 } else {
-                    throw error('not found transform action for: ' + block.action);
+                    warn('not found transform action for: ' + block.action);
+                    warn('using default (replace) action.');
+                    html[i] = replaceTransformer.call(this, block);
                 }
             });
         });
