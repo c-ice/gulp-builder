@@ -98,11 +98,11 @@ module.exports = function (options) {
 
                 var transformAction = opts[block.action];
 
-                if (typeof transformAction === 'function') {
+                if (typeof transformAction == 'function') {
                     html[i] = transformAction.call(this, block);
                     resolve();
                 } else {
-                    warn('not found transform action for: ' + block.action);
+                    warn('not found transform action for: ' + block);
                     warn('using default (replace) action.');
                     html[i] = replaceTransformer.call(this, block);
                     resolve();
