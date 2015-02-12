@@ -1,1 +1,66 @@
 # gulp-builder
+
+## Install 
+
+```sh
+npm install --save-dev git+http://github.com/c-ice/gulp-builder.git
+```
+### Example
+
+index.html
+```html
+    <!-- .... -->
+    <!-- build:components components.min.js -->
+    <script src="//localhost:8080/Scripts/chosen/chosen.jquery.js"></script>
+    <script src="//localhost:8080/Scripts/angular-chosen/chosen.js"></script>
+    <!-- endbuild -->
+    <!-- .... -->
+    <!-- build:js app.min.js -->
+    <script src="app.js"></script>
+    <script src="module1.js"></script>
+    <script src="module2.js"></script>
+    <!-- .... -->
+    <!-- endbuild -->
+```
+gulpfile.js
+```js
+var gulp = require('gulp');
+var debug = require('gulp-debug');
+var builder = require('gulp-builder');
+var gutil = require('gulp-util');
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+
+var debugCDN = '//localhost:8080/'
+var currentCDN = '//cdn.cdn.com/lol/'
+
+var options = {
+    debug: false,
+    components: function (block) {
+        var newUrl = currentCDN + block.nameInHTML;
+
+        return '<script src="' + newUrl + '"></script>';
+    },
+    app: jsBuild,
+    vendorjs: jsBuild
+};
+
+//gutil.log(builder);
+
+gulp.src('./index.html')
+    .pipe(builder(options))
+    .pipe(gulp.dest('./build/'));
+
+
+function jsBuild(block) {
+    //gutil.log(block);
+
+    var stream = gulp.src(block.files)
+        .pipe(debug(block.name))
+        .pipe(concat(block.name))
+        .pipe(uglify())
+        .pipe(gulp.dest('./build/'))
+
+    return builder.transformBlock(block);
+}
+```

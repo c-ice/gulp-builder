@@ -116,8 +116,8 @@ module.exports = function (options) {
 
 module.exports.transformBlock = replaceTransformer;
 
-module.exports.getDir = function (filepath) {
-    return path.dirname(filepath);
+module.exports.getDir = function (block) {
+    return path.dirname(block.nameInHTML);
 };
 
 function jsTransformer(block) {
