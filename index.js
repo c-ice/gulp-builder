@@ -48,7 +48,7 @@ module.exports = function (options) {
                 var mainPath = path.dirname(file.path);
 
                 var buildedBlocks = builder(file, opts);
-
+                log('buildedBlocks promise');
                 buildedBlocks.then(function () {
                     var newContent = html.join('');
 
@@ -112,7 +112,7 @@ module.exports = function (options) {
             });
         });
 
-        log('Promises mapped');
+        
 
         return Q.all(promises).then(function () {
             log(html);
