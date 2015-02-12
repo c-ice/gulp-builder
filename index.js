@@ -31,6 +31,8 @@ module.exports = function (options) {
 
     log('Start debugging ' + PLUGIN_NAME);
 
+    log(opts);
+
     return through.obj(function (file, enc, callback) {
         if (file.isStream()) {
             this.emit('error', error('Streams are not supported!'));
@@ -103,6 +105,7 @@ module.exports = function (options) {
                     warn('not found transform action for: ' + block.action);
                     warn('using default (replace) action.');
                     html[i] = replaceTransformer.call(this, block);
+                    resolve();
                 }
             });
         });
