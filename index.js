@@ -83,11 +83,11 @@ module.exports = function (options) {
         var content = file.contents.toString();
         var blocks = blocksBuilder(content);
 
-        this.getDirPath = function (filepath) {
-            var obj = path.parse(filepath);
+        //this.getDirPath = function (filepath) {
+        //    var obj = path.parse(filepath);
 
-            return obj ? obj.dir : '';
-        }
+        //    return obj ? obj.dir : '';
+        //}
 
         var counter = []; 
 
@@ -98,7 +98,7 @@ module.exports = function (options) {
             return Q.Promise(function (resolve) {
                 if (typeof block === 'string') {
                     html[i] = block;
-                    counter[i].splice(i,1);
+                    counter.splice(i,1);
                     resolve();
                     return;
                 }
@@ -107,14 +107,14 @@ module.exports = function (options) {
 
                 if (typeof transformAction === 'function') {
                     html[i] = transformAction.call(this, block);
-                    counter[i].splice(i, 1);
+                    counter.splice(i, 1);
                     resolve();
                 } else {
                     warn('not found transform action for: ' + block.action);
                     log(block);
                     warn('using default (replace) action.');
                     html[i] = replaceTransformer.call(this, block);
-                    counter[i].splice(i, 1);
+                    counter.splice(i, 1);
                     resolve();
                 }
             }).then(function () {
