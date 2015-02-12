@@ -111,19 +111,19 @@ module.exports = function (options) {
     }
 
     function jsTransformer(block) {
-        var stream = gulp.src(block.files)
-            .pipe(concat(block.name))
-            .pipe(uglify())
-            .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
+        //var stream = gulp.src(block.files)
+        //    .pipe(concat(block.name))
+        //    .pipe(uglify())
+        //    .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
 
         return replaceTransformer(block);
     }
 
     function cssTransformer(block) {
-        var stream = gulp.src(block.files)
-            .pipe(concat(block.name))
-            .pipe(minifyCss())
-            .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
+        //var stream = gulp.src(block.files)
+        //    .pipe(concat(block.name))
+        //    .pipe(minifyCss())
+        //    .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
 
         //todo media query
         return replaceTransformer(block);
