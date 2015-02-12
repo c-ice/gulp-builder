@@ -118,7 +118,7 @@ module.exports = function (options) {
                     resolve();
                 }
             }).then(function () {
-                log('unresolved counters: ' + counter);
+                log('unresolved counters: ' + counter[5]);
             });
         });
 
