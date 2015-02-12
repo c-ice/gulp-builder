@@ -132,7 +132,7 @@ module.exports = function (options) {
     }
 };
 
-module.exports.tranformBlock = replaceTransformer;
+module.exports.transformBlock = replaceTransformer;
 
 function jsTransformer(block) {
     //var stream = gulp.src(block.files)
