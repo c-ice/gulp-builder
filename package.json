@@ -20,6 +20,7 @@
     "dependencies": {
         "through2": "*",
         "gulp-util": "*",
+        "q": "*",
         "glob": "^4.3.5"
     },
     "devDependencies": {
