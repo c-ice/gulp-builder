@@ -6,6 +6,11 @@ var gutil = require('gulp-util');
 var Q = require('q');
 var extend = require('util')._extend
 var through = require('through2');
+var magenta = gutil.colors.magenta;
+var cyan = gutil.colors.cyan;
+var red = gutil.colors.red;
+
+var DEBUGGING = false;
 
 module.exports = function (options) {
     var html = [];
@@ -22,7 +27,7 @@ module.exports = function (options) {
     var opts = extend({}, defaultOptions);
     opts = extend(opts, options);
 
-    var DEBUGGING = opts.debug;
+    DEBUGGING = opts.debug;
 
     log('Start debugging ' + PLUGIN_NAME);
 
@@ -134,10 +139,9 @@ module.exports = function (options) {
     }
 
     function log(message) {
-        //if (DEBUGGING) {
-        //console.log(message);
-        gutil.log(magenta(PLUGIN_NAME), message);
-        //}
+        if (DEBUGGING) {
+            gutil.log(magenta(PLUGIN_NAME), message);
+        }
     }
 
     function warn(message) {
