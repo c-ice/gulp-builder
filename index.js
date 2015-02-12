@@ -48,7 +48,7 @@ module.exports = function (options) {
                 var mainPath = path.dirname(file.path);
 
                 var buildedBlocks = builder(file, opts);
-                log('buildedBlocks promise');
+
                 buildedBlocks.then(function () {
                     var newContent = html.join('');
 
@@ -83,22 +83,10 @@ module.exports = function (options) {
         var content = file.contents.toString();
         var blocks = blocksBuilder(content);
 
-        //this.getDirPath = function (filepath) {
-        //    var obj = path.parse(filepath);
-
-        //    return obj ? obj.dir : '';
-        //}
-
-        var counter = []; 
-
         var promises = blocks.map(function (block, i) {
-
-            counter[i] = block;
-
             return Q.Promise(function (resolve) {
                 if (typeof block === 'string') {
                     html[i] = block;
-                    counter.splice(i,1);
                     resolve();
                     return;
                 }
@@ -108,23 +96,17 @@ module.exports = function (options) {
                 if (typeof transformAction === 'function') {
                     html[i] = transformAction(block);
                     log(html[i]);
-                    counter.splice(i, 1);
                     resolve();
                 } else {
                     warn('not found transform action for: ' + block.action);
                     log(block);
                     warn('using default (replace) action.');
                     html[i] = replaceTransformer(block);
-                    counter.splice(i, 1);
                     resolve();
                 }
-            }).then(function () {
-                log('unresolved counters: ');
-                log(counter[5]);
             });
         });
 
-        log('countered: ' + counter);
 
         return Q.all(promises).then(function () {
             log(html);
