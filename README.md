@@ -7,23 +7,33 @@ npm install --save-dev git+http://github.com/c-ice/gulp-builder.git
 ```
 ### Example
 
-index.html
+**The target file `index.html`:**
 ```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My index</title>
+</head>
+<body>
     <!-- .... -->
     <!-- build:components components.min.js -->
     <script src="//localhost:8080/Scripts/chosen/chosen.jquery.js"></script>
     <script src="//localhost:8080/Scripts/angular-chosen/chosen.js"></script>
     <!-- endbuild -->
+
     <!-- .... -->
+
     <!-- build:js app.min.js -->
     <script src="app.js"></script>
     <script src="module1.js"></script>
     <script src="module2.js"></script>
     <!-- .... -->
     <!-- endbuild -->
+</body>
+</html>
 ```
-gulpfile.js
-```js
+**The `gulpfile.js`:**
+```javascript
 var gulp = require('gulp');
 var debug = require('gulp-debug');
 var builder = require('gulp-builder');
