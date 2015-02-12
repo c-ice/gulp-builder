@@ -96,7 +96,7 @@ module.exports = function (options) {
             counter++;
 
             return Q.Promise(function (resolve) {
-                if (typeof block == 'string') {
+                if (typeof block === 'string') {
                     html[i] = block;
                     counter--;
                     resolve();
@@ -105,7 +105,7 @@ module.exports = function (options) {
 
                 var transformAction = opts[block.action];
 
-                if (typeof transformAction == 'function') {
+                if (typeof transformAction === 'function') {
                     html[i] = transformAction.call(this, block);
                     counter--;
                     resolve();
@@ -118,11 +118,11 @@ module.exports = function (options) {
                     resolve();
                 }
             }).then(function () {
-                log('counter: ' + counter);
+                log('resolved counter: ' + counter);
             });
         });
 
-        log('counter: ' + counter);
+        log('countered: ' + counter);
 
         return Q.all(promises).then(function () {
             log(html);
