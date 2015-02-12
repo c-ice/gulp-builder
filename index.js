@@ -116,6 +116,10 @@ module.exports = function (options) {
 
 module.exports.transformBlock = replaceTransformer;
 
+module.exports.getDir = function (filepath) {
+    return path.dirname(filepath);
+};
+
 function jsTransformer(block) {
     //var stream = gulp.src(block.files)
     //    .pipe(concat(block.name))
