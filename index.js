@@ -109,47 +109,48 @@ module.exports = function (options) {
             log(html);
         });
     }
-
-    function jsTransformer(block) {
-        //var stream = gulp.src(block.files)
-        //    .pipe(concat(block.name))
-        //    .pipe(uglify())
-        //    .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
-
-        return replaceTransformer(block);
-    }
-
-    function cssTransformer(block) {
-        //var stream = gulp.src(block.files)
-        //    .pipe(concat(block.name))
-        //    .pipe(minifyCss())
-        //    .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
-
-        //todo media query
-        return replaceTransformer(block);
-    }
-
-    function replaceTransformer(block) {
-        if (block.type === 'js') {
-            return '<script src="' + block.nameInHTML + '"></script>';
-        } else {
-            return '<link rel="stylesheet" href="' + block.nameInHTML + '"'
-                 + (block.mediaQuery ? ' media="' + block.mediaQuery + '"' : '') + '/>';
-        }
-    }
-
-    function log(message) {
-        if (DEBUGGING) {
-            gutil.log(magenta(PLUGIN_NAME), message);
-        }
-    }
-
-    function warn(message) {
-        log(red('WARNING') + ' ' + message);
-    }
-
-    function error(message) {
-        return new PluginError(PLUGIN_NAME, message);
-    }
 };
 
+module.exports.tranformBlock = replaceTransformer;
+
+function jsTransformer(block) {
+    //var stream = gulp.src(block.files)
+    //    .pipe(concat(block.name))
+    //    .pipe(uglify())
+    //    .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
+
+    return replaceTransformer(block);
+}
+
+function cssTransformer(block) {
+    //var stream = gulp.src(block.files)
+    //    .pipe(concat(block.name))
+    //    .pipe(minifyCss())
+    //    .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
+
+    //todo media query
+    return replaceTransformer(block);
+}
+
+function replaceTransformer(block) {
+    if (block.type === 'js') {
+        return '<script src="' + block.nameInHTML + '"></script>';
+    } else {
+        return '<link rel="stylesheet" href="' + block.nameInHTML + '"'
+             + (block.mediaQuery ? ' media="' + block.mediaQuery + '"' : '') + '/>';
+    }
+}
+
+function log(message) {
+    if (DEBUGGING) {
+        gutil.log(magenta(PLUGIN_NAME), message);
+    }
+}
+
+function warn(message) {
+    log(red('WARNING') + ' ' + message);
+}
+
+function error(message) {
+    return new PluginError(PLUGIN_NAME, message);
+}
