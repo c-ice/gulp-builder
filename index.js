@@ -7,7 +7,6 @@ var Q = require('q');
 var extend = require('util')._extend
 var through = require('through2');
 
-
 module.exports = function (options) {
     var html = [];
     var defaultOptions = {
@@ -17,9 +16,15 @@ module.exports = function (options) {
         debug: false
     };
 
+    log('debug');
+
     options = options || {};
     var opts = extend({}, defaultOptions);
     opts = extend(opts, options);
+
+    var DEBUGGING = opts.debug;
+
+    log('Start debugging ' + PLUGIN_NAME);
 
     return through.obj(function (file, enc, callback) {
         if (file.isStream()) {
@@ -39,7 +44,9 @@ module.exports = function (options) {
 
                 buildedBlocks.then(function () {
                     var newContent = html.join('');
-                    console.log(newContent);
+
+                    log('----------------- joined: -------------------');
+                    log(newContent);
 
                     var newFile = new gutil.File({
                         path: file.path,
@@ -94,49 +101,51 @@ module.exports = function (options) {
         });
 
         return Q.all(promises).then(function () {
-            if (opts.debug) {
-                log(html);
-            }
+            log(html);
         });
+    }
+
+    function jsTransformer(block) {
+        var stream = gulp.src(block.files)
+            .pipe(concat(block.name))
+            .pipe(uglify())
+            .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
+
+        return replaceTransformer(block);
+    }
+
+    function cssTransformer(block) {
+        var stream = gulp.src(block.files)
+            .pipe(concat(block.name))
+            .pipe(minifyCss())
+            .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
+
+        //todo media query
+        return replaceTransformer(block);
+    }
+
+    function replaceTransformer(block) {
+        if (block.type === 'js') {
+            return '<script src="' + block.nameInHTML + '"></script>';
+        } else {
+            return '<link rel="stylesheet" href="' + block.nameInHTML + '"'
+                 + (block.mediaQuery ? ' media="' + block.mediaQuery + '"' : '') + '/>';
+        }
+    }
+
+    function log(message) {
+        //if (DEBUGGING) {
+        //console.log(message);
+        gutil.log(magenta(PLUGIN_NAME), message);
+        //}
+    }
+
+    function warn(message) {
+        log(red('WARNING') + ' ' + message);
+    }
+
+    function error(message) {
+        return new PluginError(PLUGIN_NAME, message);
     }
 };
 
-function jsTransformer(block) {
-    var stream = gulp.src(block.files)
-        .pipe(concat(block.name))
-        .pipe(uglify())
-        .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
-
-    return replaceTransformer(block);
-}
-
-function cssTransformer(block) {
-    var stream = gulp.src(block.files)
-        .pipe(concat(block.name))
-        .pipe(minifyCss())
-        .pipe(gulp.dest(this.getDirPath(block.nameInHTML)));
-
-    //todo media query
-    return replaceTransformer(block);
-}
-
-function replaceTransformer(block) {
-    if (block.type === 'js') {
-        return '<script src="' + block.nameInHTML + '"></script>';
-    } else {
-        return '<link rel="stylesheet" href="' + block.nameInHTML + '"'
-             + (block.mediaQuery ? ' media="' + block.mediaQuery + '"' : '') + '/>';
-    }
-}
-
-function log(message) {
-    gutil.log(magenta(PLUGIN_NAME), message);
-}
-
-function warn(message) {
-    log(red('WARNING') + ' ' + message);
-}
-
-function error(message) {
-    return new PluginError(PLUGIN_NAME, message);
-}
