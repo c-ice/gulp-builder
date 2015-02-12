@@ -1,6 +1,6 @@
 {
     "name": "gulp-builder",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "build blocks of your html files",
     "main": "index.js",
     "scripts": {
@@ -15,7 +15,7 @@
         "concat",
         "extract"
     ],
-    "author": "lch",
+    "author": "LCH",
     "license": "ISC",
     "dependencies": {
         "through2": "*",
