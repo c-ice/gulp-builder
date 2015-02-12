@@ -1,25 +1,30 @@
 {
-  "name": "gulp-builder",
-  "version": "0.1.0",
-  "description": "build blocks of your html files",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "inject",
-    "html",
-    "build",
-    "block",
-    "builder",
-    "concat",
-    "extract"
-  ],
-  "author": "lch",
-  "license": "ISC",
-  "devDependencies": {
-    "glob": "^4.3.5",
-    "gulp-util": "^3.0.3",
-    "q": "^1.1.2"
-  }
+    "name": "gulp-builder",
+    "version": "0.1.0",
+    "description": "build blocks of your html files",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "inject",
+        "html",
+        "build",
+        "block",
+        "builder",
+        "concat",
+        "extract"
+    ],
+    "author": "lch",
+    "license": "ISC",
+    "dependencies": {
+        "through2": "*",
+        "gulp-util": "*",
+        "glob": "^4.3.5"
+    },
+    "devDependencies": {
+        "glob": "^4.3.5",
+        "gulp-util": "^3.0.3",
+        "q": "^1.1.2"
+    }
 }

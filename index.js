@@ -13,8 +13,13 @@ module.exports = function (options) {
     var defaultOptions = {
         js: jsTransformer,
         css: cssTransformer,
-        replace: replaceTransformer
+        replace: replaceTransformer,
+        debug: false
     };
+
+    options = options || {};
+    var opts = extend({}, defaultOptions);
+    opts = extend(opts, options);
 
     return through.obj(function (file, enc, callback) {
         if (file.isStream()) {
@@ -30,7 +35,7 @@ module.exports = function (options) {
                 var name = path.basename(file.path);
                 var mainPath = path.dirname(file.path);
 
-                var buildedBlocks = builder(file, options);
+                var buildedBlocks = builder(file, opts);
 
                 buildedBlocks.then(function () {
                     var newContent = html.join('');
@@ -60,11 +65,7 @@ module.exports = function (options) {
         return fs.readFileSync(f, { encoding: 'utf-8' });
     }
 
-    function builder(file, options) {
-        options = options || {};
-        var opts = extend({}, defaultOptions);
-        extend(opts, options);
-
+    function builder(file, opts) {
         var content = file.contents.toString();
         var blocks = blocksBuilder(content);
 
@@ -93,8 +94,10 @@ module.exports = function (options) {
         });
 
         return Q.all(promises).then(function () {
-            console.log(html);
-        });;
+            if (opts.debug) {
+                log(html);
+            }
+        });
     }
 };
 
