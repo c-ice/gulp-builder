@@ -89,16 +89,16 @@ module.exports = function (options) {
             return obj ? obj.dir : '';
         }
 
-        var counter = 0; 
+        var counter = []; 
 
         var promises = blocks.map(function (block, i) {
 
-            counter++;
+            counter[i] = block;
 
             return Q.Promise(function (resolve) {
                 if (typeof block === 'string') {
                     html[i] = block;
-                    counter--;
+                    counter[i].splice(i,1);
                     resolve();
                     return;
                 }
@@ -107,18 +107,18 @@ module.exports = function (options) {
 
                 if (typeof transformAction === 'function') {
                     html[i] = transformAction.call(this, block);
-                    counter--;
+                    counter[i].splice(i, 1);
                     resolve();
                 } else {
                     warn('not found transform action for: ' + block.action);
                     log(block);
                     warn('using default (replace) action.');
                     html[i] = replaceTransformer.call(this, block);
-                    counter--;
+                    counter[i].splice(i, 1);
                     resolve();
                 }
             }).then(function () {
-                log('resolved counter: ' + counter);
+                log('unresolved counters: ' + counter);
             });
         });
 
