@@ -106,19 +106,21 @@ module.exports = function (options) {
                 var transformAction = opts[block.action];
 
                 if (typeof transformAction === 'function') {
-                    html[i] = transformAction.call(this, block);
+                    html[i] = transformAction(block);
+                    log(html[i]);
                     counter.splice(i, 1);
                     resolve();
                 } else {
                     warn('not found transform action for: ' + block.action);
                     log(block);
                     warn('using default (replace) action.');
-                    html[i] = replaceTransformer.call(this, block);
+                    html[i] = replaceTransformer(block);
                     counter.splice(i, 1);
                     resolve();
                 }
             }).then(function () {
-                log('unresolved counters: ' + counter[5]);
+                log('unresolved counters: ');
+                log(counter[5]);
             });
         });
 
