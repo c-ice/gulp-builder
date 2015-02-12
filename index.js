@@ -94,6 +94,7 @@ module.exports = function (options) {
                 if (typeof block == 'string') {
                     html[i] = block;
                     resolve();
+                    return;
                 }
 
                 var transformAction = opts[block.action];
@@ -102,7 +103,8 @@ module.exports = function (options) {
                     html[i] = transformAction.call(this, block);
                     resolve();
                 } else {
-                    warn('not found transform action for: ' + block);
+                    warn('not found transform action for: ' + block.action);
+                    log(block);
                     warn('using default (replace) action.');
                     html[i] = replaceTransformer.call(this, block);
                     resolve();
