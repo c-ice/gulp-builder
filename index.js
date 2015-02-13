@@ -153,8 +153,10 @@ function includeContentTransformer(block) {
 	var fileContent = '';
 	
 	if (fs.existsSync(block.nameInHTML)) {
-		fileContent = fread(djoin(block.nameInHTML)).toString();
+		fileContent = fread(djoin('./'+block.nameInHTML));
 	}
+
+    log(fileContent);
 	
 	return fileContent;
 }
