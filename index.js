@@ -144,7 +144,7 @@ function replaceTransformer(block) {
 
 function includeContentTransformer(block) {
 	var fileContent = '';
-    var _filePath = djoin('./' + block.nameInHTML);
+    var _filePath = djoin(block.nameInHTML);
 
     if (fs.existsSync(_filePath)) {
         log('Getting content: ' + _filePath);
