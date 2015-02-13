@@ -73,13 +73,6 @@ module.exports = function (options) {
         }
     });
 
-    function djoin(p) {
-        return path.normalize(path.join(__dirname, p));
-    }
-    function fread(f) {
-        return fs.readFileSync(f, { encoding: 'utf-8' });
-    }
-
     function builder(file, opts) {
         var content = file.contents.toString();
         var blocks = blocksBuilder(content);
@@ -178,4 +171,11 @@ function warn(message) {
 
 function error(message) {
     return new PluginError(PLUGIN_NAME, message);
+}
+
+function djoin(p) {
+    return path.normalize(path.join(__dirname, p));
+}
+function fread(f) {
+    return fs.readFileSync(f, { encoding: 'utf-8' });
 }
