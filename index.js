@@ -151,12 +151,14 @@ function replaceTransformer(block) {
 
 function includeContentTransformer(block) {
 	var fileContent = '';
+    var filePath = djoin('./' + block.nameInHTML);
 
     log(block);
+    log(filePath);
 
-    if (fs.existsSync(block.nameInHTML)) {
-        log('Getting content: ' + djoin('./' + block.nameInHTML));
-		fileContent = fread(djoin('./'+block.nameInHTML));
+    if (fs.existsSync(filePath)) {
+        log('Getting content: ' + filePath);
+        fileContent = fread(djoin(filePath));
 	}
 
     log(fileContent);
