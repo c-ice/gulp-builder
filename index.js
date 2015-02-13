@@ -18,6 +18,7 @@ module.exports = function (options) {
         js: jsTransformer,
         css: cssTransformer,
         replace: replaceTransformer,
+		include: includeContentTransformer,
         debug: false
     };
 
@@ -146,6 +147,16 @@ function replaceTransformer(block) {
         return '<link rel="stylesheet" href="' + block.nameInHTML + '"'
              + (block.mediaQuery ? ' media="' + block.mediaQuery + '"' : '') + '/>';
     }
+}
+
+function includeContentTransformer(block) {
+	var fileContent = '';
+	
+	if (fs.existsSync(block.nameInHTML)) {
+		fileContent = fread(djoin(block.nameInHTML)).toString();
+	}
+	
+	return fileContent;
 }
 
 function log(message) {
