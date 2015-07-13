@@ -143,16 +143,16 @@ function replaceTransformer(block) {
 }
 
 function includeContentTransformer(block) {
-	var fileContent = '';
-	var _filePath = path.normalize('./'+block.nameInHTML);
+    var fileContent = '';
+    var _filePath = path.normalize('./'+block.nameInHTML);
 
     log('Getting content: ' + _filePath);
     if (fs.existsSync(_filePath)) {
         fileContent = fread(_filePath);
         log(fileContent);
-	}
+    }
 	
-	return fileContent;
+    return fileContent;
 }
 
 function log(message) {
