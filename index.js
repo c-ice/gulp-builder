@@ -2,6 +2,7 @@ var PLUGIN_NAME = 'gulp-builder';
 var fs = require('fs');
 var path = require('path');
 var blocksBuilder = require('./blocksBuilder.js');
+var formalParameterList = require('./formalParameterList.js');
 var gutil = require('gulp-util');
 var Q = require('q');
 var extend = require('util')._extend
@@ -88,9 +89,15 @@ module.exports = function (options) {
                 var transformAction = opts[block.action];
 
                 if (typeof transformAction === 'function') {
-                    html[i] = transformAction(block);
+                    var parameters = formalParameterList(transformAction);
+                    if (parameters.length > 1) {
+                    	html[i] = transformAction(block, resolve);
+                    } else {
+                    	html[i] = transformAction(block);
+                    	resolve();
+                    }
+                    
                     log(html[i]);
-                    resolve();
                 } else {
                     warn('not found transform action for: ' + block.action);
                     log(block);
