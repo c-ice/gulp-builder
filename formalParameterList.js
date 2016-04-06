@@ -1,7 +1,4 @@
-module.export = formalParameterList;
-
 //http://stackoverflow.com/questions/6921588/is-it-possible-to-reflect-the-arguments-of-a-javascript-function
-
 var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 var FN_ARG_SPLIT = /,/;
 var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
@@ -22,3 +19,5 @@ function formalParameterList(fn) {
    }
    return args;
  }
+ 
+ module.export = formalParameterList;
