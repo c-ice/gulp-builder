@@ -89,14 +89,17 @@ module.exports = function (options) {
                 var transformAction = opts[block.action];
 
                 if (typeof transformAction === 'function') {
-                    var parameters = formalParameterList(transformAction);
-                    if (parameters.length > 1) {
-                    	html[i] = transformAction(block, resolve);
-                    } else {
-                    	html[i] = transformAction(block);
-                    	resolve();
-                    }
-                    
+	        	try {
+	                    var parameters = formalParameterList(transformAction);
+	                    if (parameters.length > 1) {
+	                    	html[i] = transformAction(block, resolve);
+	                    } else {
+	                    	html[i] = transformAction(block);
+	                    	resolve();
+	                    }
+	        	} catch(e){
+	        	    log(e);	
+	        	}
                     log(html[i]);
                 } else {
                     warn('not found transform action for: ' + block.action);
