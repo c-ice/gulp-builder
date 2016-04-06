@@ -9,7 +9,7 @@ function formalParameterList(fn) {
    var args=[];
    fnText = fn.toString().replace(STRIP_COMMENTS, '');
    argDecl = fnText.match(FN_ARGS); 
-
+   
    var r = argDecl[1].split(FN_ARG_SPLIT);
    for(var a in r){
       var arg = r[a];
@@ -18,6 +18,6 @@ function formalParameterList(fn) {
       });
    }
    return args;
- }
- 
- module.export = formalParameterList;
+}
+
+module.exports = formalParameterList;
