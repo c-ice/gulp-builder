@@ -61,15 +61,21 @@ gulp.src('./index.html')
     .pipe(builder(options))
     .pipe(gulp.dest('./build/'));
 
-
-function jsBuild(block) {
-    //gutil.log(block);
+/**
+ * second parameters is resolve function this is good for long async tasks.
+ */
+function jsBuild(block, resolve) {
+    var through = require('through2');
 
     var stream = gulp.src(block.files)
         .pipe(debug(block.name))
         .pipe(concat(block.name))
         .pipe(uglify())
         .pipe(gulp.dest('./build/'))
+        .pipe(through.obj(function(chunk, enc, cb) {
+          resolve();
+          cb(null, chunk);
+        }));
 
     return builder.transformBlock(block);
 }
